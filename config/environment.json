@@ -1,0 +1,9 @@
+{
+  "title": "Catberry Cases",
+  "server": {
+    "port": 3000
+  },
+  "logger": {
+    "level": 0
+  }
+}

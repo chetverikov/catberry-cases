@@ -1,0 +1,4 @@
+{
+  "name": "document",
+  "logic": "./Document.js"
+}

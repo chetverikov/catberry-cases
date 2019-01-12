@@ -1,0 +1,4 @@
+{
+  "name": "components-datatime",
+  "logic": "./index.js"
+}

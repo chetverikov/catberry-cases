@@ -1,0 +1,4 @@
+{
+  "name": "pages-entity",
+  "logic": "./index.js"
+}
