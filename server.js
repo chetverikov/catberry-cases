@@ -31,6 +31,11 @@ const app = express();
 const serveStatic = require('serve-static');
 app.use(serveStatic(config.publicDirectoryPath));
 
+// ##########################
+// ######## FAKE API ########
+// ##########################
+app.use('/api', require('./fakeApiMiddlewares'));
+
 app.use(cat.getMiddleware()); // Catberry app as a middleware
 
 const errorhandler = require('errorhandler');

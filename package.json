@@ -8,12 +8,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "catberry": "chetverikov/catberry#template-literals",
-    "catberry-uhr": "^5.0.1",
+    "catberry": "github:chetverikov/catberry#store-dispatcher-improvement",
     "catberry-logger": "^2.0.0",
+    "catberry-uhr": "^5.0.1",
+    "errorhandler": "^1.5.0",
     "express": "^4.15.2",
-    "serve-static": "^1.12.1",
-    "errorhandler": "^1.5.0"
+    "faker": "^4.1.0",
+    "node-fetch": "^2.3.0",
+    "serve-static": "^1.12.1"
   },
   "engines": {
     "node": ">=6.10"
