@@ -1,7 +1,7 @@
 class CommentsEntityComment {
 
   constructor() {
-    this.$context.setDependency('Entities/Entities');
+
   }
 
   /**
@@ -11,15 +11,8 @@ class CommentsEntityComment {
   load() {
     const {'entity-id': entityId, 'comment-id': commentId} = this.$context.params;
 
-    return this.$context.getStoreData('Entities/Entities')
-      .then(entities => {
-        const entity = entities.find(e => e.id === entityId);
-
-        if (!entity) {
-          return this.$context.notFound();
-        }
-
-        const comments = entity.comments || [];
+    return this.$context.getStoreData('Comments/EntityComments', {'entity-id': entityId})
+      .then((comments = []) => {
         const comment = comments.find(c => c.id === commentId);
 
         return comment || {};

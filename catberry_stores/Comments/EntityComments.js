@@ -1,4 +1,4 @@
-class EntityComments {
+class CommentsEntityComments {
   constructor() {
     this.$context.setDependency('Entities/Entities');
   }
@@ -10,17 +10,13 @@ class EntityComments {
   load() {
     const entityId = this.$context.params['entity-id'];
 
-    return this.$context.getStoreData()
+    return this.$context.getStoreData('Entities/Entities')
       .then(entities => {
         const entity = entities.find(e => e.id === entityId);
 
-        if (!entity) {
-          return this.$context.notFound();
-        }
-
-        return entity.comments || [];
+        return entity && entity.comments || [];
       });
   }
 }
 
-module.exports = EntityComments;
+module.exports = CommentsEntityComments;
