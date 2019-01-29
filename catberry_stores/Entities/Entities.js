@@ -2,10 +2,6 @@ const fetch = require('node-fetch');
 
 class EntitiesEntities {
   constructor() {
-    if (this.$context.isBrowser) {
-      window.entitiesStore = this;
-    }
-
     this.entities = null;
     this.hashOfComments = null;
   }
@@ -36,11 +32,6 @@ class EntitiesEntities {
   }
 
   handleCommentHasBeenUpdated({commentId, text}) {
-    if (!this.hashOfComments) {
-      // Если мы отрендерились с сервера, нам надо загрузить данные. Сделаем это через changed
-      return this.$context.changed();
-    }
-
     const comment = this.hashOfComments[commentId];
 
     if (comment) {
@@ -48,6 +39,8 @@ class EntitiesEntities {
 
       return comment;
     }
+
+    return null;
   }
 }
 

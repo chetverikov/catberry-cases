@@ -69,4 +69,14 @@ router.patch('/comments/:commentId', express.json(), (req, res) => {
   res.json(entity);
 });
 
+router.get('/comments/:commentId', (req, res) => {
+  const comment = hashOfComments[req.params.commentId];
+
+  if (!comment) {
+    return res.status(404).send();
+  }
+
+  res.json(comment);
+});
+
 module.exports = router;

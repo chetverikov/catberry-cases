@@ -3,10 +3,7 @@ const fetch = require('node-fetch');
 class CommentsEntityComment {
 
   constructor() {
-    if (this.$context.isBrowser) {
-      window.stores = window.stores || {};
-      window.stores[this.$context.instanceId] = this;
-    }
+    this.needRequestToAPI = false;
   }
 
   /**
@@ -15,6 +12,14 @@ class CommentsEntityComment {
    */
   load() {
     const {'entity-id': entityId, 'comment-id': commentId} = this.$context.params;
+
+    if (this.needRequestToAPI) {
+      this.needRequestToAPI = false;
+
+      return fetch(`http://localhost:3000/api/comments/${commentId}`)
+        .then((response) => response.json());
+    }
+
 
     return this.$context.getStoreData('Comments/EntityComments', {'entity-id': entityId})
       .then((comments = []) => {
@@ -36,14 +41,15 @@ class CommentsEntityComment {
 
       // Т.к страница рендериться из массива Entities/Entities
       // то надо сообщить что comment изменился. Entities/Entities обновит у себя кэшь
-      // или загрузит данные с сервера, если данных нет (например при ssr)
       .then(() => this.$context.sendAction('Entities/Entities', 'CommentHasBeenUpdated', {commentId, text}))
       .then(comment => {
-        // если вернулся comment, значит в Entities/Entities были данные и там просто обновился cache
-        if (comment) {
-          // нам надо отрисовать данные по новой
-          this.$context.changed();
+        if (!comment) {
+          // если comment null, значит в Entities/Entities данных нет, мы работает с SSR
+          // нам надо отрисовать данные используя API
+          this.needRequestToAPI = true;
         }
+
+        return this.$context.changed();
       })
   }
 }
